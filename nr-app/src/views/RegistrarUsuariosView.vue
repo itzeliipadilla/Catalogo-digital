@@ -1,0 +1,43 @@
+<template>
+  <div class="flex h-screen">
+    <!-- Barra lateral-->
+    <aside id="logo-sidebar" class="hidden md:block w-64 text-white h-screen" aria-label="Sidebar"></aside>
+
+    <!-- Contenedor Principal -->
+    <div class="flex-1 p-6">
+      <div v-if="loading" class="flex justify-center items-center h-full">
+        <SpinnerGreen :fullscreen="true" />
+      </div>
+      <div v-else>
+        <!-- Título -->
+        <h1 class="text-3xl font-normal mt-4 md:mt-12 mb-8 ml-0 md:ml-5">Registrar Usuario</h1>
+      </div>
+      <div> <Usuarios /> </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import Usuarios from "@/components/UsuariosForm.vue";
+import SpinnerGreen from "@/components/SpinnerGreen.vue";
+
+export default {
+  name: "RegistrarUsuariosView",
+  components: {
+    Usuarios,
+    SpinnerGreen
+  },
+   data() {
+    return {
+      loading: true,
+    };
+  },
+   mounted() {
+    if(this.$user.role !== 'Administrador')
+      this.$router.back(1);
+    setTimeout(() => {
+      this.loading = false;
+    }, 500);
+  },
+};
+</script>
